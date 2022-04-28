@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="sampleApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>Routing Test</title>
+    
+    <style>
+    	ul {padding:0;}
+    	ul.menu ul {
+    		padding: 5px;
+    		border: 1px solid black;
+    		display: inline;
+    	}
+    	
+    	ul li a {
+    		text-decoration: none;
+    		color: white;
+    	}
+    </style>
+    
+    <!-- angular 사용하기 위해서 추가.     
+    예제소스 : 시작하세요 AngularJS 프로그래밍 (고재도 지음, 위키북스)
+    -->
+    <script src="./js/angular-1.3.7/angular.js"></script>
+    <script src="./js/angular-1.3.7/angular-route.js"></script>
+    <link href="./js/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="./js/bootstrap-3.3.7-dist/css/bootstrap-theme.css" rel="stylesheet" />
+    
+    <script type="text/javascript">
+    	// 커스텀 필터 사용 추가
+        angular.module("sampleApp", ["ngRoute"]).
+        	config(function ($routeProvider) {
+        		$routeProvider
+        			.when('/home',
+        					{template: 'template/home.tmpl.html'})
+        			.when('/about',
+        					{template: 'template/about.tmpl.html', 
+        					 controller: 'aboutCtrl'})
+        			.when('/contact',
+        					{template: 'template/contact.tmpl.html',
+        					 controller: 'contactCtrl'})
+        			.otherwise({redirectTo: '/home'});
+        	}).
+        	controller('aboutCtrl', function($scope) {
+    			$scope.sales = 20000000;
+    		}).
+    		controller('contactCtrl', function($scope) {
+    			$scope.contactSubmit = function(contact) {
+    				alert(contact.name+ "에게 " + contact.contents + "를 전달했습니다.");
+    			};
+    		});
+    </script>
+</head>
+<body>
+	<ul>
+		<li><a href="#home">홈</a></li>
+		<li><a href="#about">회사에 관하여</a></li>
+		<li><a href="#contact">회사 연락</a></li>
+	</ul>
+	<ng-view></ng-view>
+</body>
+</html>
